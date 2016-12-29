@@ -9,5 +9,5 @@ multiply is a function that takes x, y then returns boolean successful
 	return send
 
 
-call multiply with x, y
+print and call multiply with x, y
 
