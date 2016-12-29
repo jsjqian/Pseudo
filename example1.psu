@@ -1,0 +1,13 @@
+print out "Hello how are you doing today"
+
+number x = 5
+number y = 20
+multiply is a function that takes x, y then returns boolean successful
+	if x is greater than 0 and y is greater than 0
+		number send = multiply x by y
+
+	return send
+
+
+call multiply with x, y
+
