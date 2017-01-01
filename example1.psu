@@ -1,13 +1,17 @@
 print out "Hello how are you doing today"
 
+#Sets the Variables
 number x = 5
 number y = 20
+#Describes what the functions input and output are
 multiply is a function that takes x, y then returns boolean successful
+	#conditional to check if both are greater than 0
 	if x is greater than 0 and y is greater than 0
+		#sets the variable send
 		number send = multiply x by y
-
+	#function returns send (assume c style booleans)
 	return send
 
-
+#prints out the value returned by the function
 print and call multiply with x, y
 
