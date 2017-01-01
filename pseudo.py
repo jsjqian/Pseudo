@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
 import token
+import translate
 import sys
 
 def main():
