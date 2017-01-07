@@ -3,24 +3,41 @@
 import re
 import sys
 
-def tokenize(str):
-  output = []
-  tokens = str.split( )
-  for token in tokens:
-    output.append((re.sub(r'[!,\.\?;:]', '', token)).upper())
-  print output
+def tokenize(file):
+  tokens = []
+  chars = read_by_char(file)
+  words = form_words(chars)
+  for word in words:
+    tokens.append((re.sub(r'[!,\.\?;:]', '', word)).upper())
+  print tokens 
 
-def main():
-  if len(sys.argv) > 2:
-    print "pseudo: " + " ".join(sys.argv) + ". Too many arguments. Usage: pseudo file"
-    exit()
-  elif len(sys.argv) < 2:
-    print "pseudo: Too few arguments. Usage: pseudo file"
-    exit()
-  filename = sys.argv[1]
-  f = open(filename, 'r')
-  str = f.read()
-  tokenize(str)
+def read_by_char(file):
+  ret = []
+  while True:
+    c = file.read(1)
+    if not c:
+      break
+    ret.append(c)
+  return ret
 
-if __name__ == "__main__":
-  main()
+def form_words(chars):
+  print chars
+  ret = []
+  buffer = []
+  count = 0;
+  for c in chars:
+    if c == '\t':
+      ret.append("_tab")
+    elif c == ' ':
+      word = ''.join(buffer)
+      ret.append(word)
+      del buffer[:]
+    elif c == '\n':
+      word = ''.join(buffer)
+      ret.append(word)
+      del buffer[:]
+      ret.append("_newline")
+    else: 
+      buffer.append(c)
+  ret.append(''.join(buffer))
+  return ret

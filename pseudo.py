@@ -13,8 +13,7 @@ def main():
     exit()
   filename = sys.argv[1]
   f = open(filename, 'r')
-  str = f.read()
-  token.tokenize(str)
+  token.tokenize(f)
 
 if __name__ == "__main__":
   main()

@@ -1,5 +1,3 @@
-*import statements if necessary*
-
 output "Hello how are you doing today"
 
 set variable x to 5
