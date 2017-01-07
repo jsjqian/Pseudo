@@ -6,7 +6,7 @@ import sys
 def tokenize(file):
   tokens = []
   chars = read_by_char(file)
-  words = form_words(chars)
+  words = clean(form_words(chars))
   for word in words:
     tokens.append((re.sub(r'[!,\.\?;:]', '', word)).upper())
   print tokens 
@@ -21,7 +21,6 @@ def read_by_char(file):
   return ret
 
 def form_words(chars):
-  print chars
   ret = []
   buffer = []
   count = 0;
@@ -37,7 +36,19 @@ def form_words(chars):
       ret.append(word)
       del buffer[:]
       ret.append("_newline")
+    elif c == '"':
+      word = ''.join(buffer)
+      ret.append(word)
+      del buffer[:]
+      ret.append('"')
     else: 
       buffer.append(c)
   ret.append(''.join(buffer))
+  return ret
+
+def clean(words):
+  ret = []
+  for w in words:
+    if w != '':
+      ret.append(w)
   return ret
