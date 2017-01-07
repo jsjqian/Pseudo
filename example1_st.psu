@@ -1,0 +1,17 @@
+*import statements if necessary*
+
+output "Hello how are you doing today"
+
+set variable x to 5
+
+set variable y to 20
+
+make function multiply that takes x and y as parameters
+
+	if x is greater than 0 and y is greater than 0
+
+		set variable send to x multiply y
+
+	return send
+
+output x and y passed into multiply
