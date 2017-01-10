@@ -9,7 +9,7 @@ def tokenize(file):
   words = clean(form_words(chars))
   for word in words:
     tokens.append((re.sub(r'[!,\.\?;:]', '', word)).upper())
-  print tokens 
+  return tokens 
 
 def read_by_char(file):
   ret = []

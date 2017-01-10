@@ -13,7 +13,9 @@ def main():
     exit()
   filename = sys.argv[1]
   f = open(filename, 'r')
-  token.tokenize(f)
+  tokens = token.tokenize(f)
+  print tokens
+  translation = translate.parse(tokens)
 
 if __name__ == "__main__":
   main()

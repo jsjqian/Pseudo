@@ -1,13 +1,15 @@
 #!/usr/bin/python
 
 def lookahead(tokens):
-  return [tokens.pop(0), tokens]
+  remain = tokens
+  first = remain.pop(0)
+  return [first, remain]
 
-def translate_variable(tokens):
+def parse_variable(tokens):
   pass
 
-def translate_print(tokens):
+def parse_print(tokens):
   pass
 
-def translate(tokens):
+def parse(tokens):
   pass
