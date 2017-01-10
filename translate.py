@@ -12,4 +12,11 @@ def parse_print(tokens):
   pass
 
 def parse(tokens):
-  pass
+  res = ""
+
+  while len(tokens) > 0:
+    la = lookahead(tokens)
+    if la[0] == "OUTPUT":
+      res = res + "print"
+
+  return res
