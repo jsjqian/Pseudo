@@ -15,7 +15,7 @@ def main():
   f = open(filename, 'r')
   tokens = token.tokenize(f)
   print tokens
-  translation = translate.parse(tokens)
+  # translation = translate.parse(tokens)
 
 if __name__ == "__main__":
   main()
