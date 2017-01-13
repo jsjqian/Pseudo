@@ -20,27 +20,45 @@ def parse_assign(tokens):
 def parse_print(tokens):
   
   res = ""
-
-  while tokens[0] != "_NEWLINE":
-    pass
-
-def parse_statement:
-  pass
-
-
-def parse(tokens):
-
-  res = ""
+  print tokens
 
   while len(tokens) > 0:
 
     la = lookahead(tokens)
 
+    if la[0] == 'STRING':
+      string = lookahead(la[1])
+      res = res + string[0]
+      tokens = string[1]
+    elif la[0] == "CALL":
+      pass
+    else:
+      pe = parse_expression(tokens)
+      res = res + pe[0]
+      tokens = pe[1]
+
+  return res
+  
+def parse_function(tokens):
+  pass
+
+def parse_expression(tokens):
+  pass
+
+def parse(tokens):
+
+  res = ""
+
+  for token in tokens:
+
+    line = ""
+    la = lookahead(token)
+
     if la[0] == "OUTPUT":
 
-      res = res + "print"
-      pp = parse_print(la[1])
-      res = res + pp[0]
-      tokens = pp[1]
+      line = line + "print "
+      print_statement = parse_print(la[1])
+      line = line + print_statement
+      res = res + line
 
   return res

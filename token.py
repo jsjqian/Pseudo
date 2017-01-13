@@ -4,27 +4,34 @@ import re
 import sys
 
 def tokenize(file):
-  tokens = []
+
   chars = read_by_char(file)
   words = clean(form_words(chars))
-  for word in words:
-    tokens.append((re.sub(r'[!,\.\?;:]', '', word)).upper())
+  lines = form_lines(words)
+  tokens = lines
+
   return tokens 
 
 def read_by_char(file):
+
   ret = []
+
   while True:
     c = file.read(1)
     if not c:
       break
     ret.append(c)
+
   return ret
 
 def form_words(chars):
+
   ret = []
   buffer = []
-  count = 0;
-  for c in chars:
+  i = 0
+
+  while i < len(chars):
+    c = chars[i]
     if c == '\t':
       ret.append("_tab")
     elif c == ' ':
@@ -39,16 +46,50 @@ def form_words(chars):
     elif c == '"':
       word = ''.join(buffer)
       ret.append(word)
+      ret.append("STRING")
       del buffer[:]
-      ret.append('"')
+      buffer.append(c)
+      i = i + 1
+
+      while chars[i] != '"':
+        buffer.append(chars[i])
+        i = i + 1
+
+      buffer.append('"')
+      word = ''.join(buffer)
+      ret.append(word)
+      del buffer[:]
+
     else: 
       buffer.append(c)
+
+    i = i + 1
+
   ret.append(''.join(buffer))
+
   return ret
 
 def clean(words):
+
   ret = []
+
   for w in words:
     if w != '':
-      ret.append(w)
+      ret.append((re.sub(r'[!,\.\?;:]', '', w)).upper())
+
+  return ret
+
+def form_lines(words):
+
+  ret = []
+  buffer = []
+  
+  for word in words:
+    if word == "_NEWLINE":
+      line = buffer[:]
+      ret.append(line)
+      del buffer[:]
+    else:
+      buffer.append(word)
+
   return ret

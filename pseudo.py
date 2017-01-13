@@ -3,6 +3,7 @@
 import token
 import translate
 import sys
+import re
 
 def main():
   if len(sys.argv) > 2:
@@ -14,8 +15,8 @@ def main():
   filename = sys.argv[1]
   f = open(filename, 'r')
   tokens = token.tokenize(f)
-  print tokens
-  # translation = translate.parse(tokens)
+  translation = translate.parse(tokens)
+  code = open(
 
 if __name__ == "__main__":
   main()
