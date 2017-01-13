@@ -15,8 +15,7 @@ def main():
     exit()
 
   filename = sys.argv[1]
-  extension = re.compile(".psu$")
-  if extension.match(filename):
+  if re.match(r'(.*)\.psu$', filename) == None:
     print "pseudo: Not a '.psu' file. Usage: pseudo file"
     exit()
 
