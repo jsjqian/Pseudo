@@ -52,12 +52,15 @@ def parse(tokens):
 
     line = ""
     la = lookahead(token)
+    while la[0] == "_TAB":
+      line = line + '\t'
+      la = lookahead(la[1])
 
     if la[0] == "OUTPUT":
 
       line = line + "print "
       print_statement = parse_print(la[1])
       line = line + print_statement
-      res = res + line
+      res = res + line + '\n'
 
   return res
