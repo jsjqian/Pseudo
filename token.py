@@ -72,10 +72,18 @@ def form_words(chars):
 def clean(words):
 
   ret = []
-
-  for w in words:
+  i = 0
+  
+  while i < len(words):
+    w = words[i]
     if w != '':
-      ret.append((re.sub(r'[!,\.\?;:]', '', w)).upper())
+      if w == "STRING":
+        ret.append(w)
+        i = i + 1
+        ret.append(words[i])
+      else:
+        ret.append((re.sub(r'[!,\.\?;:]', '', w)).upper())
+    i = i + 1
 
   return ret
 

@@ -20,7 +20,6 @@ def parse_assign(tokens):
 def parse_print(tokens):
   
   res = ""
-  print tokens
 
   while len(tokens) > 0:
 

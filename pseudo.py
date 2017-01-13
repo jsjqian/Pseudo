@@ -6,17 +6,29 @@ import sys
 import re
 
 def main():
+
   if len(sys.argv) > 2:
     print "pseudo: " + " ".join(sys.argv) + ". Too many arguments. Usage: pseudo file"
     exit()
   elif len(sys.argv) < 2:
     print "pseudo: Too few arguments. Usage: pseudo file"
     exit()
+
   filename = sys.argv[1]
+  extension = re.compile(".psu$")
+  if extension.match(filename):
+    print "pseudo: Not a '.psu' file. Usage: pseudo file"
+    exit()
+
   f = open(filename, 'r')
   tokens = token.tokenize(f)
   translation = translate.parse(tokens)
-  code = open(
+  f.close()
+  code = open(filename[:-4] + '.py', 'w+')
+  code.write(translation)
+  code.close()
+  exec(translation)
+  print "Code has been run and has been translated into " + filename[:-4] + ".py"
 
 if __name__ == "__main__":
   main()
