@@ -1,2 +1,5 @@
 output "Hello World!"
 output "This is a Pseudo program!"
+set variable foo to "bar"
+output "The value of foo was:"
+output foo
