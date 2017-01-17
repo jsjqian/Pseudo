@@ -189,4 +189,10 @@ def parse(tokens):
       line = line + function_statement
       res = res + line + '\n'
 
+    elif la[0] == "CALL":
+
+      call_statement = parse_call(la[1])
+      line = line + call_statement[0]
+      res = res + line + '\n'
+
   return res

@@ -10,4 +10,4 @@ make function foobar2 taking foo as parameters
 	output "The value of foo is:"
 	output variable foo
 output call foobar with void now
-output call foobar2 with foo now
+call foobar2 with foo now

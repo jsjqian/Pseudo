@@ -10,4 +10,4 @@ def FOOBAR2(FOO):
 	print "The value of foo is:"
 	print FOO
 print FOOBAR()
-print FOOBAR2(FOO)
+FOOBAR2(FOO)
