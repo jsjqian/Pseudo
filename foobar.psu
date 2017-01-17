@@ -1,5 +1,13 @@
 output "Hello World!"
 output "This is a Pseudo program!"
 set variable foo to "bar"
-output "The value of foo was:"
+output "The value of foo is:"
 output variable foo
+make function foobar taking void as parameters
+	output "Inside foobar!"
+make function foobar2 taking foo as parameters
+	output "Inside foobar2!"
+	output "The value of foo is:"
+	output variable foo
+output call foobar with void now
+output call foobar2 with foo now

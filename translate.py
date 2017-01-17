@@ -68,7 +68,7 @@ def parse_function(tokens):
     res = res + '('
     la = lookahead(la[1])
 
-    while True:
+    while len(la[1]) > 0:
       if la[0] == 'VOID':
         break
 
@@ -95,8 +95,29 @@ def parse_call(tokens):
 
   la = lookahead(la[1])
 
-  if la[0] == 
+  if la[0] == 'WITH':
 
+    res = res + '('
+    la = lookahead(la[1])
+
+    while len(la[1]) > 0:
+      if la[0] == 'VOID':
+        la = lookahead(la[1])
+        break
+
+      res = res + la[0]
+      la = lookahead(la[1])
+
+      if la[0] == 'NOW':
+        break
+      else:
+        res = res + ','
+
+    res = res + ')'
+    tokens = la[1]
+    return [res, tokens]
+  else:
+    raise SyntaxError('improper function call')
 
 def parse_string(tokens):
 
@@ -126,7 +147,9 @@ def parse_expression(tokens):
       res = res + ps[0]
       tokens = ps[1]
     elif la[0] == "CALL":
-      pass
+      pc = parse_call(la[1])
+      res = res + pc[0]
+      tokens = pc[1]
     elif la[0] == "VARIABLE":
       pv = parse_variable(la[1])
       res = res + pv[0]
