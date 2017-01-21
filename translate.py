@@ -9,7 +9,63 @@ def parse_while(tokens):
   
   res = ""
 
+  pe = parse_expression(tokens)
+  res = res + "while " + pe + ':'
+  return res
 
+def parse_for(tokens):
+
+  res = "for "
+
+  la = lookahead(tokens)
+
+  if la[0] == 'EACH':
+    la = lookahead(la[1])
+    res = res + la[0] + ' '
+    la = lookahead(la[1])
+    if la[0] == 'FROM':
+      la = lookahead(la[1])
+      if la[0] == '_NUMBER' or la[0] == '_VARIABLE':
+        la = lookahead(la[1])
+        start = la[0]
+        la = lookahead(la[1])
+        if la[0] == 'TO':
+          la = lookahead(la[1])
+          if la[0] == '_NUMBER' or la[0] == '_VARIABLE':
+            la = lookahead(la[1])
+            end = la[0]
+            la = lookahead(la[1])
+            if la[0] == 'COUNTING':
+              la = lookahead(la[1])
+              if la[0] == 'BY':
+                la = lookahead(la[1])
+                if la[0] == '_NUMBER' or la[0] == '_VARIABLE':
+                  la = lookahead(la[1])
+                  value = la[0]
+                  res = res + "in range(" + start + ',' + end + ',' + value + '):'
+                  return res
+                else:
+                  raise SyntaxError('for declaration error')
+              else:
+                raise SyntaxError('for declaration error')
+            else:
+              raise SyntaxError('for declaration error')
+          else:
+            raise SyntaxError('for declaration error')
+        else:
+          raise SyntaxError('for declaration error')
+      else:
+        raise SyntaxError('for declaration error')
+    elif la[0] == 'IN':
+      la = lookahead(la[1])
+      res = res + "in " + la[0]
+      return res
+    else:
+      raise SyntaxError('for declaration error')
+  else:
+    raise SyntaxError('for declaration error')
+    
+  return res
 
 def parse_if(tokens):
   
@@ -61,7 +117,7 @@ def parse_variable(tokens):
   res = ""
 
   la = lookahead(tokens)
-  res = res + la[0]
+  res = res + la[0] + ' '
   tokens = la[1]
   return [res, tokens]
 
@@ -312,7 +368,8 @@ def parse(tokens):
 
     line = ""
     la = lookahead(token)
-    while la[0] == "_TAB":
+
+    while la[0] == '_TAB':
       line = line + '\t'
       la = lookahead(la[1])
 
@@ -342,8 +399,21 @@ def parse(tokens):
 
     elif la[0] == "IF" or la[0] == "ELSE":
 
-      if_statement = parse_if(token)
+      
+      if_statement = parse_if([la[0]] + la[1])
       line = line + if_statement
+      res = res + line + '\n'
+
+    elif la[0] == "WHILE":
+
+      while_statement = parse_while(la[1])
+      line = line + while_statement
+      res = res + line + '\n'
+
+    elif la[0] == "FOR":
+
+      for_statement = parse_for(la[1])
+      line = line + for_statement
       res = res + line + '\n'
 
   return res

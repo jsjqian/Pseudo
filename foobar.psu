@@ -24,3 +24,13 @@ else if 5 equals 5
 	output "This is true!"
 else
 	output "None are true"
+set variable i to 0
+while variable i less than 5
+	output variable i
+	set variable i to variable i plus 1
+for each i from 0 to 10 counting by 2
+	output variable i
+	if variable i greater than 3
+		output variable i plus 100
+	else
+		output variable i minus 100

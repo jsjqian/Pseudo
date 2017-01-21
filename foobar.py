@@ -2,13 +2,13 @@ print "Hello World!"
 print "This is a Pseudo program!"
 FOO = 5 + 6 
 print "The value of foo is:"
-print FOO
+print FOO 
 def FOOBAR():
 	print "Inside foobar!"
 def FOOBAR2(FOO):
 	print "Inside foobar2!"
 	print "The value of foo is:"
-	print FOO
+	print FOO 
 print FOOBAR()
 FOOBAR2(FOO)
 print 5 > 6 
@@ -24,3 +24,13 @@ elif 5:
 	print "This is true!"
 else: 
 	print "None are true"
+I = 0 
+while I < 5 :
+	print I 
+	I = I + 1 
+for I in range(0,10,2):
+	print I 
+	if I:
+		print I + 100 
+	else: 
+		print I - 100 

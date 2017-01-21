@@ -81,11 +81,11 @@ def clean(words):
         ret.append(w.upper())
         i = i + 1
         ret.append(words[i])
-      elif re.match( r'^\d*\.?\d+$', w):
+      elif re.match( r'^-?\d*\.?\d+$', w):
         ret.append("_NUMBER")
         ret.append(words[i])
       else:
-        ret.append((re.sub(r'[!,\.\?;:]', '', w)).upper())
+        ret.append((re.sub(r'[!\.\?;:]', '', w)).upper())
     i = i + 1
 
   return ret
