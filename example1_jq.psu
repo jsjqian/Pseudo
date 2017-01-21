@@ -1,8 +1,0 @@
-Print out the value of "Hello how are you doing today".
-
-The variable "x" has value 5.
-The variable "y" has value 20.
-
-The function "multiply" takes in "x" and "y". If "x" is greater than 0 and "y" is greater than 0, then the variable "send" has value "x" times "y". Return "send". That ends the function "multiply".
-
-Print out the value of calling "multiply" on "x" and "y".
