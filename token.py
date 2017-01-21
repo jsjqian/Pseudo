@@ -46,7 +46,7 @@ def form_words(chars):
     elif c == '"':
       word = ''.join(buffer)
       ret.append(word)
-      ret.append("STRING")
+      ret.append("_string")
       del buffer[:]
       buffer.append(c)
       i = i + 1
@@ -77,9 +77,12 @@ def clean(words):
   while i < len(words):
     w = words[i]
     if w != '':
-      if w == "STRING":
-        ret.append(w)
+      if w == "_string":
+        ret.append(w.upper())
         i = i + 1
+        ret.append(words[i])
+      elif re.match( r'^\d*\.?\d+$', w):
+        ret.append("_NUMBER")
         ret.append(words[i])
       else:
         ret.append((re.sub(r'[!,\.\?;:]', '', w)).upper())

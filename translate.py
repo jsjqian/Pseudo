@@ -6,10 +6,36 @@ def lookahead(tokens):
   return [first, remain]
 
 def parse_while(tokens):
-  pass
+  
+  res = ""
+
+
 
 def parse_if(tokens):
-  pass
+  
+  res = ""
+
+  la = lookahead(tokens)
+
+  if la[0] == 'IF':
+
+    res = res + "if "
+    pe = parse_expression(la[1])
+    res = res + pe[0] + ':'
+    
+  elif la[0] == 'ELSE':
+
+    if len(la[1]) > 0 and la[1][0] == 'IF':
+      la = lookahead(la[1])
+      res = res + "elif "
+      pe = parse_expression(la[1])
+      res = res + pe[0] + ':'
+    else:
+      res = res + "else: "
+  else:
+    raise SyntaxError('error with if statement')
+
+  return res
 
 def parse_assign(tokens):
 
@@ -125,7 +151,7 @@ def parse_string(tokens):
 
   la = lookahead(tokens)
 
-  if la[0] == 'STRING':
+  if la[0] == '_STRING':
     string = lookahead(la[1])
     res = res + string[0]
     tokens = string[1]
@@ -133,6 +159,19 @@ def parse_string(tokens):
   else:
     raise SyntaxError('not a string')
   
+def parse_number(tokens):
+
+  res = ""
+
+  la = lookahead(tokens)
+
+  if la[0] == '_NUMBER':
+    number = lookahead(la[1])
+    res = res + number[0] + ' '
+    tokens = number[1]
+    return [res, tokens]
+  else:
+    raise SyntaxError('not a number')
 
 def parse_expression(tokens):
 
@@ -142,7 +181,7 @@ def parse_expression(tokens):
 
     la = lookahead(tokens)
 
-    if la[0] == 'STRING':
+    if la[0] == '_STRING':
       ps = parse_string(tokens)
       res = res + ps[0]
       tokens = ps[1]
@@ -154,10 +193,116 @@ def parse_expression(tokens):
       pv = parse_variable(la[1])
       res = res + pv[0]
       tokens = pv[1]
+    elif la[0] == '_NUMBER':
+      pn = parse_number(tokens)
+      res = res + pn[0]
+      tokens = pn[1]
     else:
-      raise SyntaxError('invalid expression')
+      po = parse_operator(tokens)
+      res = res + po[0]
+      tokens = po[1]
 
   return res
+
+def parse_operator(tokens):
+
+  res = ""
+
+  la = lookahead(tokens)
+
+  if la[0] == 'AND':
+
+    res = res + "and "
+    return [res, la[1]]
+
+  elif la[0] == 'OR':
+ 
+    res = res + "or "
+    return [res, la[1]]
+
+  elif la[0] == 'PLUS':
+
+    res = res + "+ "
+    return [res, la[1]]
+
+  elif la[0] == 'MINUS':
+
+    res = res + "- "
+    return [res, la[1]]
+
+  elif la[0] == 'TIMES':
+
+    res = res + "* "
+    return [res, la[1]]
+
+  elif la[0] == 'DIVIDES':
+
+    res = res + "/ "
+    return [res, la[1]]
+
+  elif la[0] == 'REMAINDER':
+
+    res = res + "% "
+    return [res, la[1]]
+
+  elif la[0] == 'GREATER':
+
+    la = lookahead(la[1])
+    if la[0] == 'THAN':
+      la = lookahead(la[1])
+      if la[0] == 'OR':
+        la = lookahead(la[1])
+        if la[0] == 'EQUAL':
+          la = lookahead(la[1])
+          if la[0] == "TO":
+            res = res + ">= "
+            return [res, la[1]]
+          else:
+            raise SyntaxError('logical operator malformed')
+        else:
+          raise SyntaxError('logical operator malformed')
+      else:
+        res = res + "> "
+        return [res, [la[0]] + la[1]]
+    else:
+      raise SyntaxError('logical operator malformed')
+
+  elif la[0] == 'LESS':
+  
+    la = lookahead(la[1])
+    if la[0] == 'THAN':
+      la = lookahead(la[1])
+      if la[0] == 'OR':
+        la = lookahead(la[1])
+        if la[0] == 'EQUAL':
+          la = lookahead(la[1])
+          if la[0] == "TO":
+            res = res + "<= "
+            return [res, la[1]]
+          else:
+            raise SyntaxError('logical operator malformed')
+        else:
+          raise SyntaxError('logical operator malformed')
+      else:
+        res = res + "< "
+        return [res, [la[0]] + la[1]]
+    else:
+      raise SyntaxError('logical operator malformed')
+
+  elif la[0] == 'EQUALS':
+
+    res = res + "== "
+    return [res, la[1]]
+
+  elif la[0] == 'NOT':
+
+    la = lookahead(la[1])
+    if la[0] == 'EQUALS':
+      res = res + "!= "
+      return [res, la[1]]
+
+  else:
+    raise SyntaxError('parse operator error')
 
 def parse(tokens):
 
@@ -193,6 +338,12 @@ def parse(tokens):
 
       call_statement = parse_call(la[1])
       line = line + call_statement[0]
+      res = res + line + '\n'
+
+    elif la[0] == "IF" or la[0] == "ELSE":
+
+      if_statement = parse_if(token)
+      line = line + if_statement
       res = res + line + '\n'
 
   return res
