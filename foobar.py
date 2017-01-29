@@ -18,9 +18,9 @@ print 5 == 4
 print 12 % 5 
 print 4 == 5 and 6 == 6 
 print 4 == 5 or 6 == 6 
-if 5:
+if 5 == 3 :
 	print "This is true!"
-elif 5:
+elif 5 == 5 :
 	print "This is true!"
 else: 
 	print "None are true"
@@ -30,7 +30,7 @@ while I < 5 :
 	I = I + 1 
 for I in range(0,10,2):
 	print I 
-	if I:
+	if I > 3 :
 		print I + 100 
 	else: 
 		print I - 100 

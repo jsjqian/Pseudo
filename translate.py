@@ -77,7 +77,7 @@ def parse_if(tokens):
 
     res = res + "if "
     pe = parse_expression(la[1])
-    res = res + pe[0] + ':'
+    res = res + pe + ':'
     
   elif la[0] == 'ELSE':
 
@@ -85,7 +85,7 @@ def parse_if(tokens):
       la = lookahead(la[1])
       res = res + "elif "
       pe = parse_expression(la[1])
-      res = res + pe[0] + ':'
+      res = res + pe + ':'
     else:
       res = res + "else: "
   else:
