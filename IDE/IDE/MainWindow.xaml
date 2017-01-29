@@ -6,16 +6,19 @@
         xmlns:local="clr-namespace:IDE"
         mc:Ignorable="d"
         Title="Pseudo IDE" Height="auto" Width="auto"
-        ResizeMode="CanResize"
+        ResizeMode="NoResize"
         WindowState="Maximized"
         Name="IDE">
-    <Grid ShowGridLines="True">
+    <Grid ShowGridLines="False">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" Name="gridCol"></ColumnDefinition>
+            <ColumnDefinition Width="*" Name="editorCol"></ColumnDefinition>
+            <ColumnDefinition Width="*" Name="pythonCol"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="20"></RowDefinition>
-            <RowDefinition Height="*" Name="gridRow"/>
+            <RowDefinition Height="20"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Name="gridRow"/>
         </Grid.RowDefinitions>
         <Menu Grid.RowSpan="2">
             <MenuItem Header="_File" Click="File_Click">
@@ -23,9 +26,28 @@
                 <MenuItem Header="_Save" Click="Save_Click" />
                 <MenuItem Header="E_xit" Click="Exit_Click" />
             </MenuItem>
+            <MenuItem Header="_Run" Click="Run_Click">
+                <MenuItem Header="Run _From Editor" Click="Code_Click_Editor" />
+                <MenuItem Header="Run _From File" Click="Code_Click_File" />
+            </MenuItem>
         </Menu>
+        <Canvas Grid.Row="2">
+            <Label Content="Pseudo" />
+        </Canvas>
+        <Canvas Grid.Row="2" Grid.Column="2">
+            <Label Content="Python" />
+        </Canvas>
+        <Canvas Grid.Row="3">
+            <RichTextBox Name="editor" AcceptsReturn ="True" Background="Black" Foreground="White" FontFamily="Courier" ScrollViewer.VerticalScrollBarVisibility="Auto" AcceptsTab="True" Keyboard.KeyUp="editorKeyPress"/>
+        </Canvas>
+        <Canvas Grid.Row="3" Grid.Column="1">
+            <RichTextBox Name="python" AcceptsReturn ="True" Background="Black" Foreground="White" FontFamily="Courier" ScrollViewer.VerticalScrollBarVisibility="Auto" AcceptsTab="True"/>
+        </Canvas>
         <Canvas Grid.Row="1">
-            <RichTextBox Name="editor" AcceptsReturn ="True" Background="Black" Height="474" Width="750" Foreground="White" FontFamily="Comic Sans MS"/>
+            <TabControl Name="Tabs" Height="20">
+                <TabItem Header="One">
+                </TabItem>
+            </TabControl>
         </Canvas>
     </Grid>
 </Window>
